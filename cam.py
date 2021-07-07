@@ -19,11 +19,7 @@ class Camera:
         } 
 
     def __init__(self):
-        gp.setwarnings(True)
-        gp.setmode(gp.BOARD)
-        gp.setup(7, gp.OUT)
-        gp.setup(11, gp.OUT)
-        gp.setup(12, gp.OUT)
+        self.setup()
 
     def setup(self):
         gp.setwarnings(True)
@@ -75,6 +71,7 @@ class Camera:
                 print(" done")  
         self.clean()
 
+'''
     def MultiCapture(num):
         for x in range(1, num):
             capture(name = num)

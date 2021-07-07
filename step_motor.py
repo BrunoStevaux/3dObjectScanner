@@ -50,33 +50,3 @@ class Motor():
                     gp.output(self.controlPin[pin], self.seq[step][pin])
                 time.sleep(0.002 )
         return cycles
-
-def main():    
-    motor = Motor()
-    motor.setup()
-    resolution = int(input("Resolution:\t"))
-    stepsForResolution = degToStep(360.0 / resolution)
-    # print(stepsForResolution)
-    total = 0
-    while(total < 512):
-        if(total + stepsForResolution < 512):
-            print("TAKING PHOTO")
-            total += motor.rotate(stepsForResolution)
-        else: 
-            if (512-total) / 512 > 0.05:
-                print(f"difference: {(512-total) / 512}")
-                print("TAKING PHOTO")
-                total += motor.rotate(stepsForResolution)
-                
-            else:
-                print(f"NOT TAKING PHOTO. CORRECTING: {512-total} step(s)")
-                total += motor.rotate(512-total)
-
-
-        print(f"{total}/512, {int(stepToDeg(total))} degs")
-        time.sleep(0.5)
-
-    gp.cleanup()
-
-if __name__ == "__main__":
-    main()
