@@ -3,6 +3,7 @@ import os
 import time
 
 class Camera:
+
     adapter_info = {
         "A":{   "i2c":"i2cset -y 1 0x70 0x00 0x04",
                 "gpio_sta":[0,0,1],
