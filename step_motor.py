@@ -36,7 +36,7 @@ class Motor():
             gp.setup(pin, gp.OUT)
             gp.output(pin, 0)
 
-    def clean():
+    def clean(self):
         gp.cleanup()
  
     def rotate(self, cycles):
@@ -49,4 +49,5 @@ class Motor():
                 for pin in range(self.STEPS):
                     gp.output(self.controlPin[pin], self.seq[step][pin])
                 time.sleep(0.002 )
+        self.clean()
         return cycles
