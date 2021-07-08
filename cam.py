@@ -32,13 +32,17 @@ class Camera:
     def clean(self):
         gp.cleanup()
 
-    def Capture(self, camera = "", name = ""):
+    def Capture(self, camera = "", name = "", directory = None):
         
+        if directory == None:
+            print("Supply a directory.")
+            exit(0)
+
         self.setup()
         name = str(name)
         
         if camera:
-            print(f"Capturing: {name + camera}")
+            print(f"Capturing: {name + camera}", end = "", flush = True)
             cam = self.adapter_info.get(camera)
             # print(cam)
             if cam == None:
@@ -49,14 +53,14 @@ class Camera:
             gp.output(11, gpio_sta[1])
             gp.output(12, gpio_sta[2])
 
-            cmd = f"raspistill -t 1500 -ss 50000 -o capture_{name+camera}.jpg"
+            cmd = f"raspistill -t 1500 -ss 50000 -o {directory}/capture_{name+camera}.jpg"
             os.system(cmd)
             print(" done")
             
         else:
             cameras = ["A", "B", "C", "D"]
             for cam in cameras: 
-                print(f"Capturing: {name + cam}")
+                print(f"Capturing: {name + cam}", end = "", flush = True)
                 camInfo = self.adapter_info.get(cam)
                 # print(camInfo)
                 if camInfo == None:
@@ -67,12 +71,14 @@ class Camera:
                 gp.output(11, gpio_sta[1])
                 gp.output(12, gpio_sta[2])
 
-                cmd = f"raspistill -t 1500 -ss 50000 -o capture_{name+cam}.jpg"
+                cmd = f"raspistill -t 1500 -ss 50000 -o {directory}/capture_{name+cam}.jpg"
                 os.system(cmd)
                 print(" done")  
+            print(" - - ")
         self.clean()
 
 '''
     def MultiCapture(num):
         for x in range(1, num):
             capture(name = num)
+'''
