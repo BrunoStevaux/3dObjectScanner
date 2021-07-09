@@ -3,7 +3,6 @@ import os
 import time
 
 class Camera:
-
     adapter_info = {
         "A":{   "i2c":"i2cset -y 1 0x70 0x00 0x04",
                 "gpio_sta":[0,0,1],
@@ -23,6 +22,7 @@ class Camera:
         self.setup()
 
     def setup(self):
+        # Set the board
         gp.setwarnings(True)
         gp.setmode(gp.BOARD)
         gp.setup(7, gp.OUT)
@@ -30,6 +30,7 @@ class Camera:
         gp.setup(12, gp.OUT)
 
     def clean(self):
+        # Clean
         gp.cleanup()
 
     def Capture(self, camera = "", name = "", directory = None):
@@ -38,9 +39,11 @@ class Camera:
             print("Supply a directory.")
             exit(0)
 
+        # Setup board
         self.setup()
         name = str(name)
         
+        # Single camera capture
         if camera:
             print(f"Capturing: {name + camera}", end = "", flush = True)
             cam = self.adapter_info.get(camera)
@@ -56,29 +59,30 @@ class Camera:
             cmd = f"raspistill -t 1500 -ss 50000 -o {directory}/capture_{name+camera}.jpg"
             os.system(cmd)
             print(" done")
-            
+
+        # Multi camera capture    
         else:
             cameras = ["A", "B", "C", "D"]
+            print("Capturing: xx", end = "", flush = True)
+
+            # A B C D cameras
             for cam in cameras: 
-                print(f"Capturing: {name + cam}", end = "", flush = True)
                 camInfo = self.adapter_info.get(cam)
-                # print(camInfo)
+
                 if camInfo == None:
                     print(f"Invalid camera: {cam}")
+
                 os.system(camInfo["i2c"]) # i2c write
                 gpio_sta = camInfo["gpio_sta"] # gpio write
                 gp.output(7, gpio_sta[0])
                 gp.output(11, gpio_sta[1])
                 gp.output(12, gpio_sta[2])
 
+                # Update print command
+                print(f"\b\b{name+cam}", end = "", flush=True)
+                # Take the photo
                 cmd = f"raspistill -t 1500 -ss 50000 -o {directory}/capture_{name+cam}.jpg"
                 os.system(cmd)
-                print(" done")  
-            print(" - - ")
+            
+            print(f" \b\b done")  
         self.clean()
-
-'''
-    def MultiCapture(num):
-        for x in range(1, num):
-            capture(name = num)
-'''
