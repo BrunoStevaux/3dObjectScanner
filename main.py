@@ -40,7 +40,7 @@ for x in range(1, resolution + 1):
     a = time.time()
     cameras.Capture(name = x,
                     directory=path)
-    # motor.rotate(deg)
+    motor.rotate(deg)
     time.sleep(1)
     
     b = time.time() - a
