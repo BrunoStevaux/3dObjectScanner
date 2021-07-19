@@ -36,10 +36,13 @@ path = create_folder()
 
 average = 0
 
+settings = "-r -t 1500 -ss 50000"
+
 for x in range(1, resolution + 1):
     a = time.time()
     cameras.Capture(name = x,
-                    directory=path)
+                    directory = path,
+                    settings = settings)
     motor.rotate(deg)
     time.sleep(1)
     
@@ -47,3 +50,5 @@ for x in range(1, resolution + 1):
     average += b
     if(int ((average/x) * (resolution - x)) > 0):
         print(f"Time left: {int ((average/x) * (resolution - x))}s")
+
+# After loop is done, move photos to USB drive (or during the photo-taking)

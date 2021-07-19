@@ -33,8 +33,9 @@ class Camera:
         # Clean
         gp.cleanup()
 
-    def Capture(self, camera = "", name = "", directory = None):
-        
+    def Capture(self, camera = "", name = "", directory = None, settings = None):
+        if settings == None:
+            settings = "-r -t 1500 -ss 50000"
         if directory == None:
             print("Supply a directory.")
             exit(0)
@@ -56,7 +57,7 @@ class Camera:
             gp.output(11, gpio_sta[1])
             gp.output(12, gpio_sta[2])
 
-            cmd = f"raspistill -t 1500 -ss 50000 -o {directory}/capture_{name+camera}.jpg"
+            cmd = f"raspistill {settings} -o {directory}/capture_{name+camera}.jpg"
             os.system(cmd)
             print(" done")
 
@@ -81,7 +82,7 @@ class Camera:
                 # Update print command
                 print(f"\b\b{name+cam}", end = "", flush=True)
                 # Take the photo
-                cmd = f"raspistill -t 1500 -ss 50000 -o {directory}/capture_{name+cam}.jpg"
+                cmd = f"raspistill {settings} -o {directory}/capture_{name+cam}.jpg"
                 os.system(cmd)
             
             print(f" \b\b done")  
