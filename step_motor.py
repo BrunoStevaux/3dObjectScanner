@@ -36,7 +36,7 @@ class Motor():
         for pin in self.controlPin:
             gp.setup(pin, gp.OUT)
             gp.output(pin, 0)
-
+    
     def clean(self):
         gp.cleanup()
  
