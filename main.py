@@ -17,6 +17,7 @@ deg = degToStep(360.0 / resolution)
 
 folderPath, folderDate = create_folder()
 
+# https://www.raspberrypi.org/documentation/raspbian/applications/camera.md
 settings = "-t 1500 -ss 50000"
 
 for x in tqdm(range(1, resolution + 1), desc = "Capturing photos", unit = "4 photos"):
