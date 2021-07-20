@@ -8,17 +8,22 @@ import datetime, time
 import os
 from tqdm import tqdm
 
-cameras = Camera()
-motor = Motor()
 
 resolution = int(input("Resolution (1-100):\t"))
-#motor takes steps. not degrees. this converts from degrees to steps for u.
+#motor takes steps. not degrees. this converts from degrees to steps for you.
 deg = degToStep(360.0 / resolution)
+
+# checkFreeSpace returns FALSE if there is not enough space.
+if not checkFreeSpace(resolution, usb = USB_connected()):
+    exit(1)
 
 folderPath, folderDate = create_folder()
 
 # https://www.raspberrypi.org/documentation/raspbian/applications/camera.md
-settings = "-t 1500 -ss 50000"
+settings = " -r -t 1500 -ss 50000"
+
+cameras = Camera()
+motor = Motor()
 
 for x in tqdm(range(1, resolution + 1), desc = "Capturing photos", unit = "4 photos"):
     cameras.Capture(name = x,
