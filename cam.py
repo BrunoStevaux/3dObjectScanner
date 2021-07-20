@@ -46,7 +46,7 @@ class Camera:
         
         # Single camera capture
         if camera:
-            print(f"Capturing: {name + camera}", end = "", flush = True)
+            # print(f"Capturing: {name + camera}", end = "", flush = True)
             cam = self.adapter_info.get(camera)
             # print(cam)
             if cam == None:
@@ -59,12 +59,12 @@ class Camera:
 
             cmd = f"raspistill {settings} -o {directory}/capture_{name+camera}.jpg"
             os.system(cmd)
-            print(" done")
+            # print(" done")
 
         # Multi camera capture    
         else:
             cameras = ["A", "B", "C", "D"]
-            print("Capturing: xx", end = "", flush = True)
+            # print("Capturing: xx", end = "", flush = True)
 
             # A B C D cameras
             for cam in cameras: 
@@ -80,10 +80,10 @@ class Camera:
                 gp.output(12, gpio_sta[2])
 
                 # Update print command
-                print(f"\b\b{name+cam}", end = "", flush=True)
+                # print(f"\b\b{name+cam}", end = "", flush=True)
                 # Take the photo
                 cmd = f"raspistill {settings} -o {directory}/capture_{name+cam}.jpg"
                 os.system(cmd)
             
-            print(f" \b\b done")  
+            # print(f" \b\b done")  
         self.clean()
