@@ -2,7 +2,7 @@ import RPi.GPIO as gp
 import time
 import os
 
-RATIO = 10
+RATIO = 5
 ROTATIONS = 512 * RATIO
 
 def stepToDeg(num):
@@ -56,7 +56,7 @@ class Motor():
                 # [0, 1, 1, 0] => off on on off for GPIO pins 31 33 35 37
                 for pin in range(4):
                     gp.output(self.controlPin[pin], self.seq[step][pin])
-                time.sleep(0.001 )
+                time.sleep(0.004)
         
         # Clean the GPIO pins
         self.clean()

@@ -83,6 +83,7 @@ class Camera:
                 # print(f"\b\b{name+cam}", end = "", flush=True)
                 # Take the photo
                 cmd = f"raspistill {settings} -o {directory}/capture_{name+cam}.jpg"
+                # print(cmd)
                 os.system(cmd)
             
             # print(f" \b\b done")  
